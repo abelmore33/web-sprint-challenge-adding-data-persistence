@@ -1,7 +1,8 @@
 // build your `/api/tasks` router here
-// build your `/api/resources` router here
-// build your `/api/projects` router here
+
 const express = require("express");
+
+const { validateTask } = require("./middleware");
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.get("/:resource_id", (req, res, next) => {
     .catch(next);
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", validateTask, (req, res, next) => {
   Tasks.add(req.body)
     .then((projects) => {
       res.status(202).json(projects);
